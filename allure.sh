@@ -1,15 +1,19 @@
 #!/bin/bash
+# Exit on any error
+set -e
 
-# 1. Print a message to the console
 echo "Starting the Automation Suite..."
 
-# 2. Clean old results (Linux command)
+# 1. CRITICAL: Install dependencies first
+npm install
+
+# 2. Install Playwright Browsers (only needed once, but safe to keep)
+npx playwright install --with-deps
+
+# 3. Clean old results
 rm -rf allure-results allure-report
 
-# 3. Run Playwright tests
+# 4. Run tests
 npx playwright test --grep selctorhub
 
-# 4. Generate the Allure Report
-allure generate allure-results --clean -o allure-report
-
-echo "Test execution and report generation complete!"
+echo "Test execution complete!"
